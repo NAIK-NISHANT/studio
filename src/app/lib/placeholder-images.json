@@ -1,0 +1,10 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Indian vegetable market scene",
+      "imageUrl": "https://picsum.photos/seed/mandi/1200/600",
+      "imageHint": "indian market"
+    }
+  ]
+}
