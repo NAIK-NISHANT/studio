@@ -6,13 +6,20 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Info } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
-  const today = new Date().toLocaleDateString('en-IN', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
+  const [today, setToday] = useState<string>('');
+
+  useEffect(() => {
+    // Operations that produce different values on the server versus the client,
+    // like new Date(), must be deferred until after client-side hydration.
+    setToday(new Date().toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }));
+  }, []);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -20,7 +27,7 @@ export default function Dashboard() {
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-primary">Daily Price Watch</h1>
-            <p className="text-muted-foreground">Today's Mandi Market Rates ({today})</p>
+            <p className="text-muted-foreground">Today's Mandi Market Rates ({today || 'Loading...'})</p>
           </div>
           <Badge variant="outline" className="border-primary text-primary px-3 py-1">
             Live Updates
@@ -65,12 +72,14 @@ export default function Dashboard() {
             to add your transport and wastage costs to get a <strong>Recommended Retail Price (RRP)</strong> 
             for your village Sante.
           </p>
-          <Link href="/calculator" className="mt-4 inline-block">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold group">
-              Start Calculating
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-            </Button>
-          </Link>
+          <div className="mt-4">
+            <Link href="/calculator">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold group">
+                Start Calculating
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
